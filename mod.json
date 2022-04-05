@@ -1,16 +1,28 @@
 {
-	"Name": "Takyon.ChatFlares",
+	"Name": "Takyon.ChatFlairs",
 	"Description": "Adds and or color to chat messages",
 	"LoadPriority": 1,
 	"RequiredOnClient": false,
 	"Version": "0.0.1",
 	"Scripts": [
 		{
-			"Path": "takyon_chatflares.nut",
+			"Path": "takyon_chatflairs.nut",
 			"RunOn": "SERVER",
 			"ServerCallback": {
-				"After": "takyon_chatflaresInit"
+				"After": "ChatFlairsInit"
 			}
+		}
+	],
+	"ConVars": [
+		{
+			"Name": "cf_admin_uids",
+			"DefaultValue": "1006880507304" // list of UIDs who should have the privilege of giving badges
+			//"DefaultValue": "1006880507304, 1006880507304, 1006880507304"
+		},
+		{
+			"Name": "cf_color_rights",
+			"DefaultValue": "1006880507304" // list of UIDs who should have the privilege of changing their text color. admins have this right so no need to re-add
+			//"DefaultValue": "1006880507304, 1006880507304, 1006880507304"
 		}
 	]
 }

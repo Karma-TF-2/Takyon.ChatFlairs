@@ -1,2 +1,2 @@
-# Takyon.ChatFlares
- Adds flares and colors to chat messages
+# Takyon.ChatFlairs
+ Adds flairs and colors to chat messages
