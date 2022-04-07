@@ -11,6 +11,10 @@
 			"ServerCallback": {
 				"After": "ChatFlairsInit"
 			}
+		},
+		{
+			"Path": "takyon_cfg.nut",
+			"RunOn": "SERVER"
 		}
 	],
 	"ConVars": [

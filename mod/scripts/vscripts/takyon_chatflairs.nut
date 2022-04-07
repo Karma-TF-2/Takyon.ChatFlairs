@@ -1,10 +1,12 @@
 global function ChatFlairsInit
 
-string path = "../R2Northstar/mods/Takyon.ChatFlairs/mod/scripts/vscripts/cfg/" // where the config is stored
+string path = "../R2Northstar/mods/Takyon.ChatFlairs/mod/scripts/vscripts/takyon_cgf.nut" // where the config is stored
+string liveCfg = ""
 array<string> adminUIDs = []
 array<string> colorChangeUIDs = []
 
 table<string, vector> flairColorTable = {
+	Admin = <220, 0, 0>
     Mod = <0, 179, 254>,
     Dev = <0, 30, 254>
 }
@@ -12,6 +14,7 @@ table<string, vector> flairColorTable = {
 void function ChatFlairsInit(){
 	AddCallback_OnReceivedSayTextMessage(ChatCallback)
 
+	LoadCfg()
 	UpdateConvarLists()
 	thread ChatFlairsMain()
 }
@@ -22,10 +25,10 @@ void function ChatFlairsMain(){
 
 ClServer_MessageStruct function ChatCallback(ClServer_MessageStruct message) {
     string msg = message.message.tolower()
-
+	
 	if (format("%c", msg[0]) == "/" && (adminUIDs.contains(message.player.GetUID()) || colorChangeUIDs.contains(message.player.GetUID()))) {
         // command
-        msg = msg.slice(1) // remove !
+        msg = msg.slice(1) // remove /
         array<string> msgArr = split(msg, " ") // split at space, [0] = command
         string cmd
         
@@ -42,27 +45,27 @@ ClServer_MessageStruct function ChatCallback(ClServer_MessageStruct message) {
 		printl(cmd.slice(3))
         if(cmd.slice(0,3) == "col"){
 			try{
-			array<string> rawVals = split(cmd.slice(4, cmd.len()-1), ",")
-			string r = rawVals[0]
-			string g = rawVals[1]
-			string b = rawVals[2]
+				array<string> rawVals = split(cmd.slice(4, cmd.len()-1), ",")
+				string r = rawVals[0]
+				string g = rawVals[1]
+				string b = rawVals[2]
 
-			string colTag = "\x1b[38;2;" + r + ";" + g + ";" + b + "m"
-			
-			message.message = message.message.slice(cmd.len()+1)
-			message.message = colTag + message.message
-
+				string colTag = "\x1b[38;2;" + r + ";" + g + ";" + b + "m"
+				
+				message.message = message.message.slice(cmd.len()+1)
+				message.message = colTag + message.message
 			}catch(e){ printl("ERROR")}
 		}
     }
 
 	// flairs
 
-	array<string> uids = split( GetCfg(), "\n" )
+	array<string> uids = split(liveCfg, "\n") // change
 	array<string> flairs = []
 
 	bool playerInCfg = false
 	foreach(string uidCombo in uids){
+		printl(uidCombo)
 		array<string> splitUidCombo = split(uidCombo, ":")
 		if(splitUidCombo[0] == message.player.GetUID()){
 			printl("player found")
@@ -106,11 +109,30 @@ void function UpdateConvarLists()
         colorChangeUIDs.append(strip(uid))
 }
 
-void function SaveCfg(){
+/*void function SaveCfg(){
+	DevTextBufferClear()
 
+	DevTextBufferWrite("global string cf_cfgString = @\"")
+    DevTextBufferWrite(liveCfg)
+	DevTextBufferWrite("\"")
+
+	DevP4Checkout(path)
+    DevTextBufferDumpToFile(path)
+    DevP4Add(path)
+
+	LoadCfg()
+	printl("[ChatFlairs] saved config")
+}*/
+
+void function LoadCfg(){
+	liveCfg = cf_cfgString
 }
 
-string function GetCfg(){
-
-	return "1006880507305:[Admin]\n1006880507304:[Mod],[Dev]"
-}
+/*void function EditLiveCfg(){
+	print("EDITING CFG")
+	liveCfg = @"1009099551543:[Admin]
+1006527769252:[Mod]
+1003204785491:[Mod]
+1006880507304:[Moddd],[Deveee]"
+	SaveCfg()
+}*/
