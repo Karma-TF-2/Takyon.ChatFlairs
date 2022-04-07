@@ -6,7 +6,10 @@ array<string> adminUIDs = []
 array<string> colorChangeUIDs = []
 
 table<string, vector> flairColorTable = {
-	Admin = <220, 0, 0>
+    Owner = <0, 220, 30>
+    Server Manager = <220, 0, 30>
+    Senior Admin = <0, 220, 0>
+    Admin = <220, 0, 0>
     Mod = <0, 179, 254>,
     Dev = <0, 30, 254>
 }
