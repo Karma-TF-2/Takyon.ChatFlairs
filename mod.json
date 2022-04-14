@@ -1,7 +1,7 @@
 {
 	"Name": "Takyon.ChatFlairs",
 	"Description": "Adds and or color to chat messages",
-	"LoadPriority": 1,
+	"LoadPriority": 5,
 	"RequiredOnClient": false,
 	"Version": "0.0.1",
 	"Scripts": [
