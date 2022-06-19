@@ -12,9 +12,9 @@ table<string, vector> flairColorTable = {
     Admin = <220, 0, 0>
     Mod = <0, 179, 254>
     Developer = <0, 30, 254>
-    VIP = <255, 218, 185>
+    VIP = <220, 218, 185>
     DJM = <100, 24, 30>
-    DJMdon = <10, 255, 57>
+    DJMdon = <10, 220, 57>
 }
 
 void function ChatFlairsInit(){
